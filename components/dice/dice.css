@@ -1,0 +1,54 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  padding: 10rem;
+}
+.cube {
+  height: 20vw;
+  perspective: 80vw;
+  perspective-origin: 50% 10vw;
+}
+.cube__wrap {
+  width: 20vw;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(0deg);
+}
+.cube__side {
+  position: absolute;
+  width: 20vw;
+  height: 20vw;
+  border: 2px solid #fff;
+  box-shadow: inset 0px 0px 100px #555;
+}
+.cube__side:nth-child(even) {
+  background: rgba(255,0,0,0.5);
+}
+.cube__side:nth-child(odd) {
+  background: rgba(0,0,255,0.5);
+}
+.cube__side--back {
+  transform: translateZ(-10vw) rotateY(180deg);
+}
+.cube__side--right {
+  transform: rotateY(-270deg) translateX(10vw);
+  transform-origin: right top;
+}
+.cube__side--left {
+  transform: rotateY(270deg) translateX(-10vw);
+  transform-origin: left center;
+}
+.cube__side--top {
+  transform: rotateX(-90deg) translateY(-10vw);
+  transform-origin: center top;
+}
+.cube__side--bottom {
+  transform: rotateX(90deg) translateY(10vw);
+  transform-origin: center bottom;
+}
+.cube__side--front {
+  transform: translateZ(10vw);
+}

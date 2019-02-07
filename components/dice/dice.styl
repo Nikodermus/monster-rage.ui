@@ -1,0 +1,52 @@
+*
+    box-sizing: border-box
+    margin: 0
+    padding: 0
+
+body
+    padding: 10rem
+
+.cube
+    height: 20vw
+    perspective: @height * 4
+    perspective-origin: 50% (@height/2)
+
+    &__wrap
+        width: @height
+        position: relative
+        transform-style: preserve-3d
+        transform: rotateX(0deg)
+
+    &__side
+        position: absolute
+        width: @height
+        height: @height
+        border: 2px solid white
+        box-shadow: inset 0px 0px 100px #555;
+
+        &:nth-child(even)
+            background: alpha(red, .5)
+        &:nth-child(odd)
+            background: alpha(blue, .5)
+
+        &--back
+            transform: translateZ(-@height/2) rotateY(180deg)
+
+        &--right
+            transform: rotateY(-270deg) translateX(@height/2)
+            transform-origin:  right top
+
+        &--left
+            transform: rotateY(270deg) translateX(-@height/2)
+            transform-origin:  left center
+
+        &--top
+            transform: rotateX(-90deg) translateY(-@height/2)
+            transform-origin: center top
+
+        &--bottom
+            transform: rotateX(90deg) translateY(@height/2)
+            transform-origin: center bottom
+
+        &--front
+            transform: translateZ(@height/2)

@@ -7,20 +7,24 @@ body {
   padding: 10rem;
 }
 .cube {
-  height: 20vw;
-  perspective: 80vw;
-  perspective-origin: 50% 10vw;
+  height: 200px;
+  width: 200px;
+  perspective: 800px;
+  perspective-origin: 50% 100px;
 }
 .cube__wrap {
-  width: 20vw;
+  width: 200px;
+  height: 200px;
   position: relative;
   transform-style: preserve-3d;
   transform: rotateX(0deg);
+  margin: 0 auto;
+  animation: spin-around 5s infinite linear;
 }
 .cube__side {
   position: absolute;
-  width: 20vw;
-  height: 20vw;
+  width: 200px;
+  height: 200px;
   border: 2px solid #fff;
   box-shadow: inset 0px 0px 100px #555;
 }
@@ -31,24 +35,56 @@ body {
   background: rgba(0,0,255,0.5);
 }
 .cube__side--back {
-  transform: translateZ(-10vw) rotateY(180deg);
+  transform: translateZ(-100px) rotateY(180deg);
 }
 .cube__side--right {
-  transform: rotateY(-270deg) translateX(10vw);
+  transform: rotateY(-270deg) translateX(100px);
   transform-origin: right top;
 }
 .cube__side--left {
-  transform: rotateY(270deg) translateX(-10vw);
+  transform: rotateY(270deg) translateX(-100px);
   transform-origin: left center;
 }
 .cube__side--top {
-  transform: rotateX(-90deg) translateY(-10vw);
+  transform: rotateX(-90deg) translateY(-100px);
   transform-origin: center top;
 }
 .cube__side--bottom {
-  transform: rotateX(90deg) translateY(10vw);
+  transform: rotateX(90deg) translateY(100px);
   transform-origin: center bottom;
 }
 .cube__side--front {
-  transform: translateZ(10vw);
+  transform: translateZ(100px);
+}
+@-moz-keyframes spin-around {
+  from {
+    transform: rotateX(0) rotateY(0);
+  }
+  to {
+    transform: rotateX(-360deg) rotateY(360deg);
+  }
+}
+@-webkit-keyframes spin-around {
+  from {
+    transform: rotateX(0) rotateY(0);
+  }
+  to {
+    transform: rotateX(-360deg) rotateY(360deg);
+  }
+}
+@-o-keyframes spin-around {
+  from {
+    transform: rotateX(0) rotateY(0);
+  }
+  to {
+    transform: rotateX(-360deg) rotateY(360deg);
+  }
+}
+@keyframes spin-around {
+  from {
+    transform: rotateX(0) rotateY(0);
+  }
+  to {
+    transform: rotateX(-360deg) rotateY(360deg);
+  }
 }

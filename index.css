@@ -2,7 +2,8 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 *,
 *::after,
@@ -58,27 +59,27 @@ body {
   transform: rotateX(-360deg) rotateY(90deg);
 }
 .cube__wrap--fake-roll-0 {
-  transform: rotatex(-367) rotateY(248) rotate(38);
+  transform: rotatex(-465) rotateY(249) rotate(18);
   transition-duration: 1s;
 }
 .cube__wrap--fake-roll-1 {
-  transform: rotatex(-417) rotateY(181) rotate(53);
+  transform: rotatex(-439) rotateY(319) rotate(139);
   transition-duration: 1s;
 }
 .cube__wrap--fake-roll-2 {
-  transform: rotatex(-396) rotateY(100) rotate(22);
+  transform: rotatex(-423) rotateY(184) rotate(167);
   transition-duration: 1s;
 }
 .cube__wrap--fake-roll-3 {
-  transform: rotatex(-475) rotateY(258) rotate(105);
+  transform: rotatex(-394) rotateY(97) rotate(167);
   transition-duration: 1s;
 }
 .cube__wrap--fake-roll-4 {
-  transform: rotatex(-419) rotateY(239) rotate(24);
+  transform: rotatex(-455) rotateY(102) rotate(175);
   transition-duration: 1s;
 }
 .cube__wrap--fake-roll-5 {
-  transform: rotatex(-593) rotateY(151) rotate(93);
+  transform: rotatex(-451) rotateY(327) rotate(112);
   transition-duration: 1s;
 }
 .cube__side {

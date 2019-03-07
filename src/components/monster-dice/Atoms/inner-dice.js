@@ -1,35 +1,27 @@
-import { disableClick, enableClick } from "../../../functionality/htmlElements";
+class InnerDice extends HTMLElement {
+    constructor (custom_sides = {}) {
+        super();
 
-class MonsterDice extends HTMLElement {
-  constructor(custom_sides = {}) {
-    super();
+        this.addEventListener('click', (e) => this.rollTheDice(e));
 
-    this.addEventListener("click", e => this.rollTheDice(e));
+        this.custom_sides = custom_sides;
+        this.dice_sides = ['front', 'right', 'back', 'top', 'bottom', 'left'];
 
-    this.custom_sides = custom_sides;
-    this.dice_sides = ["front", "right", "back", "top", "bottom", "left"];
+        this.dice_sides.forEach((side) => {
+            if (!this.custom_sides[side]) this.custom_sides[side] = side;
+        });
 
-    this.dice_sides.forEach(side => {
-      if (!this.custom_sides[side]) this.custom_sides[side] = side;
-    });
+        this.roll_history = {};
 
-    this.roll_history = {};
+        const shadowDice = this.attachShadow({ mode: 'open' });
 
-    let shadowDice = this.attachShadow({ mode: "open" });
+        shadowDice.innerHTML = this.getInitialTemplate();
+    }
 
-    shadowDice.innerHTML = this.getInitialTemplate();
-  }
-
-  getInitialTemplate() {
-    return `
+    getInitialTemplate () {
+        return `
         <style>
-            :host {
-                cursor: pointer;
-                height: 500px;
-                perspective-origin: 50% 250px;
-                perspective: 2000px;
-                width: 500px;
-            }
+
             :host .monster-dice__wrap {
                 width: 500px;
                 height: 500px;
@@ -116,90 +108,38 @@ class MonsterDice extends HTMLElement {
                 transform: translateZ(250px);
             }
         </style>
-        <div class="monster-dice__wrap">
             <div class="monster-dice__side monster-dice__side--front ${
-              this.custom_sides.front
-            }">
+    this.custom_sides.front
+}">
                 ${this.custom_sides.front}
             </div>
             <div class="monster-dice__side monster-dice__side--right ${
-              this.custom_sides.right
-            }">
+    this.custom_sides.right
+}">
                 ${this.custom_sides.right}
             </div>
             <div class="monster-dice__side monster-dice__side--back ${
-              this.custom_sides.back
-            }">
+    this.custom_sides.back
+}">
                 ${this.custom_sides.back}
             </div>
             <div class="monster-dice__side monster-dice__side--top ${
-              this.custom_sides.top
-            }">
+    this.custom_sides.top
+}">
                 ${this.custom_sides.top}
             ️</div>
             <div class="monster-dice__side monster-dice__side--bottom ${
-              this.custom_sides.bottom
-            }">
+    this.custom_sides.bottom
+}">
                 ${this.custom_sides.bottom}
             </div>
             <div class="monster-dice__side monster-dice__side--left ${
-              this.custom_sides.left
-            }">
+    this.custom_sides.left
+}">
                 ${this.custom_sides.left}
             </div>
-        </div>
 `;
-  }
-
-  rollTheDice({ target }) {
-    const { roll_history } = this;
-
-    let timeout = 0;
-
-    const dice = this;
-    const dice_wrap = this.children[0];
-    const last_roll = roll_history.last ? roll_history[roll_history.last] : "";
-
-    disableClick(dice);
-    const [index, roll] = getDiceSide(dice_sides);
-
-    if (last_roll == roll) {
-      timeout = 1000;
-      dice_wrap.classList.remove(`cube__wrap--${last_roll}`);
-      dice_wrap.classList.add(`cube__wrap--fake-roll-${index}`);
     }
-
-    const wait_for_roll = setTimeout(() => {
-      dice.addEventListener("transitionend", () => releaseDice(dice));
-
-      dice_wrap.classList.remove(
-        `cube__wrap--${last_roll}`,
-        `cube__wrap--fake-roll-${index}`
-      );
-      dice_wrap.classList.add(`cube__wrap--${roll}`);
-
-      const date = new Date();
-      roll_history[date.valueOf()] = roll;
-      roll_history.last = date.valueOf();
-
-      clearTimeout(wait_for_roll);
-    }, timeout);
-  }
-
-  connectedCallback() {}
-
-  disconnectedCallback() {}
 }
 
-customElements.define("monster-dice", MonsterDice);
-
-const monster_dice = new MonsterDice({
-  front: 1,
-  right: 2,
-  back: 3,
-  bottom: "⊗",
-  left: "♡",
-  top: "x"
-});
-
-document.body.insertAdjacentElement("afterbegin", monster_dice);
+customElements.define('inner-dice', InnerDice);

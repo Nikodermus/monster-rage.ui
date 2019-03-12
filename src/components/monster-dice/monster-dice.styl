@@ -1,11 +1,45 @@
+
+red = #b02626
+black = #333
+
 monster-dice
     cursor: pointer
     height: 500px
+    width: @height
     perspective-origin: 50% (@height/2)
     perspective: @height * 4
-    width: @height
 
-    & .&
+    .&
+        &--front
+            .monster-dice__wrap
+                transform: rotateX(-360deg) rotateY(360deg)
+
+        &--right
+            .monster-dice__wrap
+                transform: rotateX(-360deg) rotateY(270deg)
+
+        &--back
+            .monster-dice__wrap
+                transform: rotateX(-180deg) rotateY(360deg) rotate(180deg)
+
+        &--top
+            .monster-dice__wrap
+                transform: rotateX(-630deg) rotateY(360deg) rotate(180deg)
+
+        &--bottom
+            .monster-dice__wrap
+                transform: rotateX(-270deg) rotateY(360deg)
+
+        &--left
+            .monster-dice__wrap
+                transform: rotateX(-360deg) rotateY(90deg)
+
+        &--fake-roll
+            for num in (0..5)
+                &-{num}
+                    .monster-dice__wrap
+                        transform: rotatex(random(-630,-360)) rotateY(random(90,360)) rotate(random(0,180))
+                        transition-duration: 1s
 
         &__wrap
             width: @height
@@ -15,30 +49,6 @@ monster-dice
             transform: rotateX(0) rotateY(0)
             margin: 0 auto
             transition-duration: 2s
-
-            &--front
-                transform: rotateX(-360deg) rotateY(360deg)
-
-            &--right
-                transform: rotateX(-360deg) rotateY(270deg)
-
-            &--back
-                transform: rotateX(-180deg) rotateY(360deg) rotate(180deg)
-
-            &--top
-                transform: rotateX(-630deg) rotateY(360deg) rotate(180deg)
-
-            &--bottom
-                transform: rotateX(-270deg) rotateY(360deg)
-
-            &--left
-                transform: rotateX(-360deg) rotateY(90deg)
-
-            &--fake-roll
-                for num in (0..5)
-                    &-{num}
-                        transform: rotatex(random(-630,-360)) rotateY(random(90,360)) rotate(random(0,180))
-                        transition-duration: 1s
 
         &__side
             position: absolute
@@ -51,6 +61,7 @@ monster-dice
             align-items: center
             justify-content: center
             font-size: (@height/2)
+            overflow: hidden
 
             &--back
                 transform: translateZ(-@height/2) rotateY(180deg)

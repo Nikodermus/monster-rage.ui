@@ -23,7 +23,7 @@ const configDev = {
                 loader: 'eslint-loader',
                 options: {
                     fix: true,
-                    cache: true,
+                    cache: false,
                     failOnError: true,
                 },
             },
@@ -59,7 +59,7 @@ const configDev = {
                 ],
             },
             {
-                test: /\.scss$/,
+                test: /\.styl$/,
                 use: ['style-loader', 'css-loader', 'stylus-loader'],
             },
             {

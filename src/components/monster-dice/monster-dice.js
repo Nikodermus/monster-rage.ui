@@ -2,78 +2,57 @@ import { getRandomFromArray } from '../../functionality/data';
 import { disableClick, enableClick } from '../../functionality/html-elements';
 
 class MonsterDice extends HTMLElement {
-    constructor (custom_sides = {}) {
+    constructor () {
         super();
 
-        this.addEventListener('click', (e) => this.rollTheDice(e));
+        this.addEventListener('click', this.rollTheDice);
 
-        this.custom_sides = custom_sides;
-        this.dice_sides = ['front', 'right', 'back', 'top', 'bottom', 'left'];
+        this.sides = [
+            { side: 'front', face: 1, value: 1 },
+            { side: 'right', face: 2, value: 2 },
+            { side: 'back', face: 3, value: 3 },
+            { side: 'bottom', face: '⚡️', value: 'power' },
+            { side: 'left', face: '❤️', value: 'live' },
+            { side: 'top', face: '⚔', value: 'attack' },
+        ];
 
-        this.dice_sides.forEach((side) => {
-            if (!this.custom_sides[side]) this.custom_sides[side] = side;
-        });
-
-        this.roll_history = {};
+        this.roll_history = {
+            last: '',
+        };
 
         this.innerHTML = this.getInitialTemplate();
     }
 
     getInitialTemplate () {
+        const { sides } = this;
+
         return `
-        <div class="monster-dice__wrap">
-            <div class="monster-dice__side monster-dice__side--front ${
-    this.custom_sides.front
-}">
-                <span>${this.custom_sides.front}</span>
-            </div>
-            <div class="monster-dice__side monster-dice__side--right ${
-    this.custom_sides.right
-}">
-                <span>${this.custom_sides.right}</span>
-            </div>
-            <div class="monster-dice__side monster-dice__side--back ${
-    this.custom_sides.back
-}">
-                <span>${this.custom_sides.back}</span>
-            </div>
-            <div class="monster-dice__side monster-dice__side--top ${
-    this.custom_sides.top
-}">
-                <span>${this.custom_sides.top}</span>️
-            </div>
-            <div class="monster-dice__side monster-dice__side--bottom ${
-    this.custom_sides.bottom
-}">
-                <span>${this.custom_sides.bottom}</span>
-            </div>
-            <div class="monster-dice__side monster-dice__side--left ${
-    this.custom_sides.left
-}">
-                <span>${this.custom_sides.left}</span>
-            </div>
-        </div>
+<div class="monster-dice__wrap">
+    ${sides
+        .map(
+            ({ side, face }) => `
+                        <div class="monster-dice__side monster-dice__side--${side}">
+                            <span>${face}</span>
+                        </div>
+                    `,
+        )
+        .join('')}
+</div>
 `;
     }
 
     rollTheDice () {
-        const { roll_history, dice_sides } = this;
-
-        let timeout = 0;
-
         const dice = this;
-        const last_roll = roll_history.last
-            ? roll_history[roll_history.last]
-            : '';
+
+        const { roll_history, sides } = dice;
+        const last_roll = roll_history.last;
+        const [roll, index] = getRandomFromArray(sides);
 
         disableClick(dice);
-        const [roll, index] = getRandomFromArray(dice_sides);
 
-        if (last_roll === roll) {
-            timeout = 1000;
-            dice.classList.remove(`monster-dice--${last_roll}`);
-            dice.classList.add(`monster-dice--fake-roll-${index}`);
-        }
+        if (last_roll) dice.classList.remove(`monster-dice--${last_roll}`);
+
+        dice.classList.add(`monster-dice--fake-roll-${index}`);
 
         const wait_for_roll = setTimeout(() => {
             setTimeout(() => {
@@ -84,14 +63,17 @@ class MonsterDice extends HTMLElement {
                 `monster-dice--${last_roll}`,
                 `monster-dice--fake-roll-${index}`,
             );
-            dice.classList.add(`monster-dice--${roll}`);
+            dice.classList.add(`monster-dice--${roll.side}`);
 
             const date = new Date();
-            roll_history[date.valueOf()] = roll;
-            roll_history.last = date.valueOf();
+            roll_history[date.valueOf()] = roll.value;
+            roll_history.last = roll.side;
+
+            //eslint-disable-next-line
+            console.error(roll_history);
 
             clearTimeout(wait_for_roll);
-        }, timeout);
+        }, 1000);
     }
 
     get rollHistory () {

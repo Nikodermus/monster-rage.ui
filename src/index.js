@@ -1,13 +1,10 @@
-import MonsterDice from './components/monster-dice/monster-dice';
 import './style/index.styl';
+import createUser from './components/monster-dice/user-interface/user-interface';
 
-const monster_dice = new MonsterDice({
-    front: 1,
-    right: 2,
-    back: 3,
-    bottom: '⚡️',
-    left: '❤️',
-    top: '⚔',
-});
+const user = {
+    availableDices: 6,
+    id: 'Nikodermus',
+    availableRolls: 3,
+};
 
-document.body.appendChild(monster_dice);
+createUser(user);

@@ -1,47 +1,46 @@
-import { getRandomFromArray } from '../../functionality/data';
-import { disableClick, enableClick } from '../../functionality/html-elements';
+import { getRandomFromArray } from "../../functionality/data";
+import { disableClick, enableClick } from "../../functionality/html-elements";
 
 class MonsterDice extends HTMLElement {
-    constructor () {
+    constructor() {
         super();
 
-        this.addEventListener('click', this.rollTheDice);
+        this.addEventListener("click", this.rollTheDice);
 
         this.sides = [
-            { side: 'front', face: 1, value: 1 },
-            { side: 'right', face: 2, value: 2 },
-            { side: 'back', face: 3, value: 3 },
-            { side: 'bottom', face: '⚡️', value: 'power' },
-            { side: 'left', face: '❤️', value: 'live' },
-            { side: 'top', face: '⚔', value: 'attack' },
+            { side: "front", face: 1, value: 1 },
+            { side: "right", face: 2, value: 2 },
+            { side: "back", face: 3, value: 3 },
+            { side: "bottom", face: "⚡️", value: "power" },
+            { side: "left", face: "❤️", value: "live" },
+            { side: "top", face: "⚔", value: "attack" }
         ];
 
         this.roll_history = {
-            last: '',
+            last: ""
         };
 
         this.innerHTML = this.getInitialTemplate();
     }
 
-    getInitialTemplate () {
+    getInitialTemplate() {
         const { sides } = this;
 
         return `
-<div class="monster-dice__wrap">
-    ${sides
+            <div class="monster-dice__wrap">
+                ${sides
         .map(
             ({ side, face }) => `
-                        <div class="monster-dice__side monster-dice__side--${side}">
-                            <span>${face}</span>
-                        </div>
-                    `,
+                                    <div class="monster-dice__side monster-dice__side--${side}">
+                                        <span>${face}</span>
+                                    </div>
+                                `
         )
-        .join('')}
-</div>
-`;
+        .join("")}
+            </div>`;
     }
 
-    rollTheDice () {
+    rollTheDice() {
         const dice = this;
 
         const { roll_history, sides } = dice;
@@ -61,7 +60,7 @@ class MonsterDice extends HTMLElement {
 
             dice.classList.remove(
                 `monster-dice--${last_roll}`,
-                `monster-dice--fake-roll-${index}`,
+                `monster-dice--fake-roll-${index}`
             );
             dice.classList.add(`monster-dice--${roll.side}`);
 
@@ -76,11 +75,11 @@ class MonsterDice extends HTMLElement {
         }, 1000);
     }
 
-    get rollHistory () {
+    get rollHistory() {
         return this.roll_history;
     }
 }
 
-customElements.define('monster-dice', MonsterDice);
+customElements.define("monster-dice", MonsterDice);
 
 export default MonsterDice;
